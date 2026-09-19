@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiempo Perdido ⏳ | Suivi du Temps Perdu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="logo-icon">⏳</span>
+                <h1>Tiempo Perdido</h1>
+            </div>
+            
+            <nav class="nav-links">
+                <button class="nav-btn active" data-target="dashboard-page">Dashboard</button>
+                <button class="nav-btn" data-target="table-page">Registres</button>
+                <button class="nav-btn" id="nav-login-btn" data-target="login-page">Connexion Admin</button>
+                <button class="btn btn-danger" id="logout" style="display:none; margin-left: 10px;">Déconnexion</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <section id="dashboard-page" class="page-section active">
+            <div class="section-header">
+                <h2>Statistiques Globales</h2>
+                <p>Quantification du temps perdu en cours d'espagnol</p>
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi-card highlight">
+                    <div class="kpi-icon">⏱️</div>
+                    <div class="kpi-content">
+                        <h3>Total Temps Perdu</h3>
+                        <p id="kpi-total-time" class="kpi-value">0h 00min</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">🔥</div>
+                    <div class="kpi-content">
+                        <h3>Record sur 1 cours</h3>
+                        <p id="kpi-record-time" class="kpi-value">0 min</p>
+                        <span id="kpi-record-date" class="kpi-subtext">Aucune donnée</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">📊</div>
+                    <div class="kpi-content">
+                        <h3>Moyenne par cours</h3>
+                        <p id="kpi-avg-time" class="kpi-value">0 min</p>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">📚</div>
+                    <div class="kpi-content">
+                        <h3>Cours Enregistrés</h3>
+                        <p id="kpi-total-courses" class="kpi-value">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card world-stats-card">
+                <div class="card-title">
+                    <h3>🌍 Pendant ce temps perdu sur Terre...</h3>
+                </div>
+                <div class="world-stats-grid">
+                    <div class="world-stat-item">
+                        <span class="world-stat-icon">👶</span>
+                        <div class="world-stat-info">
+                            <strong id="stat-births">0</strong>
+                            <p>naissances dans le monde</p>
+                        </div>
+                    </div>
+
+                    <div class="world-stat-item">
+                        <span class="world-stat-icon">⚰️</span>
+                        <div class="world-stat-info">
+                            <strong id="stat-deaths">0</strong>
+                            <p>décès dans le monde</p>
+                        </div>
+                    </div>
+                    
+                    <div class="world-stat-item">
+                        <span class="world-stat-icon">💻</span>
+                        <div class="world-stat-info">
+                            <strong id="stat-ordi">0</strong>
+                            <p>ordinateurs ont été produits</p>
+                        </div>
+                    </div>
+
+
+                    <div class="world-stat-item">
+                        <span class="world-stat-icon">🍕</span>
+                        <div class="world-stat-info">
+                            <strong id="stat-pizzas">0</strong>
+                            <p>pizzas ont été consommées</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="table-page" class="page-section">
+            <div id="add-entry-container" class="card add-entry-card" style="display: none;">
+                <div class="card-title">
+                    <h3>➕ Ajouter un retard ou une sortie anticipée</h3>
+                </div>
+                <form id="add-log-form" class="log-form">
+                    <div class="form-group">
+                        <label for="course-date">Date du cours</label>
+                        <input type="date" id="course-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time-slot">Créneau horaire</label>
+                        <select id="time-slot" required>
+                            <option value="08:00 - 09:00">08:00 - 09:00</option>
+                            <option value="09:00 - 10:00">09:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="minutes-lost">Minutes perdues</label>
+                        <input type="number" id="minutes-lost" min="1" max="180" placeholder="ex: 15" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
+            </div>
+
+            <div class="table-toolbar">
+                <div class="toolbar-title">
+                    <h2>Historique des logs</h2>
+                </div>
+                <div class="toolbar-controls">
+                    <label for="sort-select">Trier par :</label>
+                    <select id="sort-select" class="select-input">
+                        <option value="date-desc">Date (du plus récent au plus ancien)</option>
+                        <option value="date-asc">Date (du plus ancien au plus récent)</option>
+                        <option value="time-desc">Temps perdu (du plus grand au plus petit)</option>
+                        <option value="time-asc">Temps perdu (du plus petit au plus grand)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card table-card">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date du cours</th>
+                                <th>Créneau horaire</th>
+                                <th>Minutes perdues</th>
+                                <th id="th-actions" style="display: none;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body"></tbody>
+                    </table>
+                </div>
+                <div id="table-empty-message" class="empty-message hidden">
+                    Aucune donnée enregistrée pour le moment.
+                </div>
+            </div>
+        </section>
+
+        <section id="login-page" class="page-section">
+            <div class="card" style="max-width: 400px; margin: 2rem auto; padding: 2rem;">
+                <h2 style="margin-bottom: 1.5rem; text-align: center;">Accès Administration</h2>
+                <form id="login-form">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="email">Email Admin</label>
+                        <input id="email" type="email" placeholder="email@exemple.com" required style="width: 100%; padding: 0.5rem;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="password">Mot de passe</label>
+                        <input id="password" type="password" placeholder="••••••••" required style="width: 100%; padding: 0.5rem;">
+                    </div>
+                    <button type="submit" id="login" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="custom-confirm-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>Confirmation</h3>
+            <p>Êtes-vous sûr de vouloir supprimer ce registre ?</p>
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn btn-secondary">Annuler</button>
+                <button id="modal-confirm-btn" class="btn btn-danger">Oui, supprimer</button>
+            </div>
+        </div>
+    </div>
+
+	<footer style="text-align: center; margin-top: 2rem; padding: 1rem; color: #9ca3af; font-size: 0.75rem;">
+		<div style="display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
+			<span>dev par </span>
+			<a href="https://discord.gg/uv5BzKpnN6" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+				<svg width="14" height="14" viewBox="0 0 127.14 96.36" fill="#5865F2">
+					<path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14c2.64-27.38-4.51-51.11-18.85-72.15ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74C48.83,40.21,54,45.92,53.89,53,53.89,60,48.74,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74C91,40.21,96.16,45.92,96,53,96,60,90.93,65.69,84.69,65.69Z"/>
+				</svg>
+				<span style="text-decoration: underline;">Microbiote65</span>
+			</a>
+		</div>
+		<br>version 1.1
+	</footer>
+
+    <script type="module">
+        import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+        const SUPABASE_URL = "https://nsguqewtjuuuazqlxyqf.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zZ3VxZXd0anV1dWF6cWx4eXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3NDI4NDQsImV4cCI6MjEwNTMxODg0NH0.vUO8K2sRbLivwryYjdTo5vdCETbyXC4wXZlEloFgRy4";
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const WORLD_STATS_PER_HOUR = {
+            births: 15600,
+            deaths: 7200,
+            pizzas: 3400000,
+            ordi: 35000
+        };
+
+        let currentUserId = null;
+        let currentLogs = [];
+        let logIdToDelete = null;
+
+        async function initUser() {
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            if (!session) {
+                currentUserId = null;
+                updateUIState(false);
+                return;
+            }
+
+            currentUserId = session.user.id;
+            updateUIState(true);
+        }
+
+        function updateUIState(isLoggedIn) {
+            const navLoginBtn = document.getElementById("nav-login-btn");
+            const logoutBtn = document.getElementById("logout");
+            
+            if (navLoginBtn) navLoginBtn.style.display = isLoggedIn ? "none" : "inline-block";
+            if (logoutBtn) logoutBtn.style.display = isLoggedIn ? "inline-block" : "none";
+
+            const addContainer = document.getElementById("add-entry-container");
+            if (addContainer) addContainer.style.display = isLoggedIn ? "block" : "none";
+
+            const thActions = document.getElementById("th-actions");
+            if (thActions) thActions.style.display = isLoggedIn ? "table-cell" : "none";
+
+            if (isLoggedIn && document.getElementById("login-page").classList.contains("active")) {
+                switchTab("dashboard-page");
+            }
+
+            renderTable();
+        }
+
+        const loginForm = document.getElementById("login-form");
+        if (loginForm) {
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                    alert("Erreur de connexion : " + error.message);
+                } else {
+                    location.reload();
+                }
+            };
+        }
+
+        document.getElementById("logout").onclick = async () => {
+            await supabase.auth.signOut();
+            location.reload();
+        };
+
+        async function loadLogs() {
+            const { data, error } = await supabase
+                .from("lost_time_logs")
+                .select("*");
+
+            if (error) {
+                console.error("Erreur chargement logs :", error.message);
+                return;
+            }
+
+            currentLogs = data || [];
+            updateKPIs();
+            renderTable();
+        }
+
+        function updateKPIs() {
+            const totalCourses = currentLogs.length;
+
+            if (totalCourses === 0) {
+                if (document.getElementById('kpi-total-time')) document.getElementById('kpi-total-time').textContent = '0h 00min';
+                if (document.getElementById('kpi-record-time')) document.getElementById('kpi-record-time').textContent = '0 min';
+                if (document.getElementById('kpi-record-date')) document.getElementById('kpi-record-date').textContent = 'Aucune donnée';
+                if (document.getElementById('kpi-avg-time')) document.getElementById('kpi-avg-time').textContent = '0 min';
+                if (document.getElementById('kpi-total-courses')) document.getElementById('kpi-total-courses').textContent = '0';
+                
+                updateWorldStats(0);
+                return;
+            }
+
+            const totalMinutes = currentLogs.reduce((acc, log) => acc + log.minutes_lost, 0);
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            
+            if (document.getElementById('kpi-total-time')) {
+                document.getElementById('kpi-total-time').textContent = `${hours}h ${minutes < 10 ? '0' : ''}${minutes}min`;
+            }
+
+            const recordLog = currentLogs.reduce((max, log) => log.minutes_lost > max.minutes_lost ? log : max, currentLogs[0]);
+            if (document.getElementById('kpi-record-time')) {
+                document.getElementById('kpi-record-time').textContent = `${recordLog.minutes_lost} min`;
+            }
+            
+            if (document.getElementById('kpi-record-date')) {
+                const formattedDate = new Date(recordLog.course_date).toLocaleDateString('fr-FR');
+                document.getElementById('kpi-record-date').textContent = `le ${formattedDate} (${recordLog.time_slot})`;
+            }
+
+            if (document.getElementById('kpi-avg-time')) {
+                const avgMinutes = (totalMinutes / totalCourses).toFixed(1);
+                document.getElementById('kpi-avg-time').textContent = `${avgMinutes} min`;
+            }
+
+            if (document.getElementById('kpi-total-courses')) {
+                document.getElementById('kpi-total-courses').textContent = totalCourses;
+            }
+
+            updateWorldStats(totalMinutes);
+        }
+
+        function updateWorldStats(totalMinutes) {
+            const hoursLost = totalMinutes / 60;
+
+            const births = Math.round(hoursLost * WORLD_STATS_PER_HOUR.births);
+            const deaths = Math.round(hoursLost * WORLD_STATS_PER_HOUR.deaths);
+            const pizzas = Math.round(hoursLost * WORLD_STATS_PER_HOUR.pizzas);
+            const ordi = Math.round(hoursLost * WORLD_STATS_PER_HOUR.ordi);
+
+            if (document.getElementById('stat-births')) document.getElementById('stat-births').textContent = births.toLocaleString('fr-FR');
+            if (document.getElementById('stat-deaths')) document.getElementById('stat-deaths').textContent = deaths.toLocaleString('fr-FR');
+            if (document.getElementById('stat-pizzas')) document.getElementById('stat-pizzas').textContent = pizzas.toLocaleString('fr-FR');
+            if (document.getElementById('stat-ordi')) document.getElementById('stat-ordi').textContent = ordi.toLocaleString('fr-FR');
+        }
+
+        function getLogDateTime(log) {
+            const dateStr = log.course_date;
+            const startTime = log.time_slot ? log.time_slot.split(' - ')[0] : "00:00";
+            return new Date(`${dateStr}T${startTime}:00`);
+        }
+
+        function renderTable() {
+            const tableBody = document.getElementById('logs-table-body');
+            const emptyMessage = document.getElementById('table-empty-message');
+
+            if (!tableBody) return;
+
+            if (currentLogs.length === 0) {
+                tableBody.innerHTML = '';
+                if (emptyMessage) emptyMessage.classList.remove('hidden');
+                return;
+            }
+
+            if (emptyMessage) emptyMessage.classList.add('hidden');
+
+            const sortSelect = document.getElementById('sort-select');
+            const sortValue = sortSelect ? sortSelect.value : 'date-desc';
+            
+            const sortedLogs = [...currentLogs].sort((a, b) => {
+                if (sortValue === 'date-desc') return getLogDateTime(b) - getLogDateTime(a);
+                if (sortValue === 'date-asc') return getLogDateTime(a) - getLogDateTime(b);
+                if (sortValue === 'time-desc') return b.minutes_lost - a.minutes_lost;
+                if (sortValue === 'time-asc') return a.minutes_lost - b.minutes_lost;
+                return 0;
+            });
+
+            tableBody.innerHTML = sortedLogs.map(log => {
+                const formattedDate = new Date(log.course_date).toLocaleDateString('fr-FR');
+                const deleteBtnHtml = currentUserId ? `
+                    <td class="action-cell">
+                        <button class="btn btn-danger btn-delete" data-id="${log.id}">
+                            <span class="btn-text">Supprimer</span>
+                            <span class="btn-icon">🗑</span>
+                        </button>
+                    </td>
+                ` : '';
+
+                return `
+                    <tr>
+                        <td><strong>${formattedDate}</strong></td>
+                        <td>${log.time_slot}</td>
+                        <td><span class="badge-minutes">+${log.minutes_lost} min</span></td>
+                        ${deleteBtnHtml}
+                    </tr>
+                `;
+            }).join('');
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.onclick = () => {
+                    logIdToDelete = btn.dataset.id;
+                    document.getElementById('custom-confirm-modal').classList.add('active');
+                };
+            });
+        }
+
+        const modal = document.getElementById('custom-confirm-modal');
+        const cancelBtn = document.getElementById('modal-cancel-btn');
+        const confirmBtn = document.getElementById('modal-confirm-btn');
+
+        cancelBtn.onclick = () => {
+            logIdToDelete = null;
+            modal.classList.remove('active');
+        };
+
+        confirmBtn.onclick = async () => {
+            if (logIdToDelete) {
+                const { error } = await supabase.from("lost_time_logs").delete().eq("id", logIdToDelete);
+                if (error) {
+                    alert("Erreur lors de la suppression : " + error.message);
+                } else {
+                    await loadLogs();
+                }
+            }
+            logIdToDelete = null;
+            modal.classList.remove('active');
+        };
+
+        const addForm = document.getElementById('add-log-form');
+        if (addForm) {
+            addForm.onsubmit = async (e) => {
+                e.preventDefault();
+                if (!currentUserId) return alert("Connecte-toi pour enregistrer une entrée.");
+
+                const course_date = document.getElementById('course-date').value;
+                const time_slot = document.getElementById('time-slot').value;
+                const minutes_lost = parseInt(document.getElementById('minutes-lost').value, 10);
+
+                const { error } = await supabase.from("lost_time_logs").insert({
+                    course_date,
+                    time_slot,
+                    minutes_lost,
+                    user_id: currentUserId
+                });
+
+                if (error) {
+                    alert("Erreur lors de l'enregistrement : " + error.message);
+                } else {
+                    document.getElementById('minutes-lost').value = '';
+                    await loadLogs();
+                }
+            };
+        }
+
+        function switchTab(targetId) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+
+            const activeBtn = document.querySelector(`.nav-btn[data-target="${targetId}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) targetSection.classList.add('active');
+        }
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.onclick = () => {
+                const targetId = btn.getAttribute('data-target');
+                switchTab(targetId);
+            };
+        });
+
+        const sortSelect = document.getElementById('sort-select');
+        if (sortSelect) sortSelect.onchange = renderTable;
+
+        const dateInput = document.getElementById('course-date');
+        if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+
+        await initUser();
+        await loadLogs();
+    </script>
+</body>
+</html>
